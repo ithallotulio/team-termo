@@ -132,6 +132,14 @@ void zeroArray(int array[], int size = 5) {
         array[i]=0;
 }
 
+/*
+* Verifica o quão parecida é a palavra digitada pelo usuário com a palavra do jogo
+* a verificação é armazenada no array userWordChecked[]
+* cada posição do array representa uma letra do userWord
+* 0 = não existe a letra na palavra
+* 1 = existe a letra na palavra, mas está na posição errada
+* 2 = existe a letra na palavra e está na posição correta
+*/
 void checkUserWord(string userWord, string gameWord, int userWordChecked[]) {
     int countpalavra=0;
     int counttermo=0;
