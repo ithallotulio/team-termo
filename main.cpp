@@ -22,7 +22,7 @@ bool containsLetter(char letter, string word);
 bool isComplete(int userWordChecked[TAMANHO]);
 void showUserWordChecked(string userInput, int userWordChecked[], int delay);
 void stringUpper(string *str);
-void limpaVetor(int palavra[]);
+void zeroArray(int array[], int size);
 void checkUserWord(string userInput, string randomWord, int userWordChecked[]);
 void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChecked[]);
 string removeSpaces(string word);
@@ -126,16 +126,17 @@ void stringUpper(string *str) {
     }
 }
 
-void limpaVetor(int palavra[]) {
-    for (int i = 0; i < TAMANHO; i++)
-        palavra[i]=0;
+// Zera o array
+void zeroArray(int array[], int size = 5) {
+    for (int i = 0; i < size; i++)
+        array[i]=0;
 }
 
 void checkUserWord(string userWord, string gameWord, int userWordChecked[]) {
     int countpalavra=0;
     int counttermo=0;
 
-    limpaVetor(userWordChecked);
+    zeroArray(userWordChecked);
 
     for(countpalavra=0;countpalavra<TAMANHO;countpalavra++) {
         if(userWord[countpalavra]==gameWord[countpalavra]) {
