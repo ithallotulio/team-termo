@@ -29,7 +29,7 @@ string removeSpaces(string word);
 void checkUserWord(string userInput, string randomWord, int userWordChecked[]);
 bool isComplete(int userWordChecked[TAMANHO]);
 bool isValidWord(string word);
-string getUserInput();
+string getUserWord();
 string getRandomWord(vector<string>vecString);
 
 // Game Interface
@@ -57,11 +57,11 @@ int main() {
     gameWord = {"PAPAR"};
     while (tentativa<=6) {
         cout << "Digite uma palavra: ";
-        userWord = getUserInput();
+        userWord = getUserWord();
         vecUserWord.push_back(userWord);
         showGameScreen(vecUserWord, gameWord, userWordChecked);
         tentativa++;
-        if (isComplete( userWordChecked )){
+        if (isComplete(userWordChecked)){
             break;
         }
     }
@@ -171,7 +171,7 @@ bool isValidWord(string word) {
     return true;
 }
 
-string getUserInput() {
+string getUserWord() {
     string input;
 
     getline(cin, input);
