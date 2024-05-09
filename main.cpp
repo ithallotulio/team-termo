@@ -1,19 +1,18 @@
-// O Replit salva automaticamente, só escrever o código que ele ja deixa salvo
 #include <iostream>
 #include <string>
 #include <cctype>
 #include <vector>
 #include <fstream>
-#include <chrono>    //pra add delay
-#include <thread>    //pra add delay
-#include <windows.h> // para a mudança de cor do texto
+#include <chrono>
+#include <thread>
+#include <windows.h>
 #include <cstdlib>
 
 #define TAMANHO 5
 
 using namespace std;
-using namespace std::this_thread;     // sleep_for, sleep_until
-using namespace std::chrono;         // miliseconds
+using namespace std::this_thread;
+using namespace std::chrono;
 
 /* --------------------------------------------------------------------- */
 /*                         Declaração de funções                         */
@@ -78,7 +77,6 @@ int main() {
 
 //                  ==========   Utility   ==========
 
-// Verifica se uma string contém apenas char alfabéticos (alfabeto inglês)
 bool isAlpha(string str) {
     for (char c : str) {
         if (!isalpha(c))
@@ -87,7 +85,6 @@ bool isAlpha(string str) {
     return true;
 }
 
-// Verifica se uma letra está contida em uma palavra
 bool containsLetter(char letter, string word) {
     for (int i = 0; i < word.length(); i++) {
         if (letter == word[i])
@@ -96,20 +93,17 @@ bool containsLetter(char letter, string word) {
     return false;
 }
 
-// Toda a string fica maiúscula
 void stringUpper(string *str) {
     for (char &c : *str) {
         c = toupper(c);
     }
 }
 
-// Zera o array
 void zeroArray(int array[], int size = 5) {
     for (int i = 0; i < size; i++)
         array[i]=0;
 }
 
-// Retorna a palavra sem espaços
 string removeSpaces(string word) {
     string wordNoSpaces;
     for (char c: word) {
@@ -122,14 +116,6 @@ string removeSpaces(string word) {
 
 //            ==========   Game Mechanics and rules   ==========
 
-/*
-* Verifica o quão parecida é a palavra digitada pelo usuário com a palavra do jogo
-* a verificação é armazenada no array userWordChecked[]
-* cada posição do array representa uma letra do userWord
-* 0 = não existe a letra na palavra
-* 1 = existe a letra na palavra, mas está na posição errada
-* 2 = existe a letra na palavra e está na posição correta
-*/
 void checkUserWord(string userWord, string gameWord, int userWordChecked[]) {
     int countpalavra=0;
     int counttermo=0;
@@ -167,15 +153,6 @@ bool isComplete(int userWordChecked[TAMANHO]) {
     return check;
 }
 
-/*
- * Verifica se uma palavra é válida, retornando:
- * Falso, char não alfabetico
- * Falso, tem espaço
- * Falso, não tem 5 letras
- * Falso, todas letras vogais (5 vogais)
- * Falso, todas letras consoantes (0 vogais)
- * Verdadeiro, qualquer outra situação
- */
 bool isValidWord(string word) {
     string vowels = {"AEIOU"};
     int i, vowelCount = 0;
@@ -194,11 +171,6 @@ bool isValidWord(string word) {
     return true;
 }
 
-/*
-* Coleta e retorna a entrada do usuário após validação
-* Remove espaços da entrada
-* Retorna a string maiúscula
-*/
 string getUserInput() {
     string input;
 
@@ -212,7 +184,6 @@ string getUserInput() {
     return input;
 }
 
-// Retorna uma palavra aleatória de um vetor de palavras
 string getRandomWord(vector<string>vecString) {
     srand(time(0));
     int RandomIndex = rand() % vecString.size();
@@ -221,11 +192,9 @@ string getRandomWord(vector<string>vecString) {
 
 //                  ==========   Game Interface   ==========
 
-// Escreve a resposta do user com as cores diferentes
 void showUserWordChecked(string userInput, int userWordChecked[], int delay = 0) {
     int count=0;
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // necessário para mudar as cores
-
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     cout << "---------------------" << endl;
     for (count=0;count<TAMANHO;count++) {
         sleep_for(milliseconds(delay));
@@ -260,10 +229,8 @@ void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChe
     }
 }
 
-
 //                      ==========   File   ==========
 
-// Retorna um vetor de string, onde cada index do vetor armazena uma linha do arquivo.txt
 vector<string> getFileInfo(string fileName) {
     ifstream file(fileName);
     vector<string> fileInfo;
