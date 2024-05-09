@@ -31,5 +31,12 @@
 *.out
 *.app
 
+# Replit
+.ccls-cache
+.replit
+replit.nix
+Makefile
+.breakpoints
+
 # vscode
 .vscode
