@@ -19,6 +19,7 @@ using namespace std::chrono;         // miliseconds
 bool isAlpha(string str);
 bool isValidWord(string word);
 bool containsLetter(char letter, string word);
+bool isComplete(int userWordChecked[TAMANHO]);
 void showUserWordChecked(string userInput, int userWordChecked[], int delay);
 void stringUpper(string *str);
 void limpaVetor(int palavra[]);
@@ -36,16 +37,25 @@ int main() {
     vector<string> vecUserWord;
     string userWord, gameWord;
     int userWordChecked[TAMANHO] = {0};
+    int pontuacao=0;
+    int tentativa=0;
 
     // Código
-    gameWord = getRandomWord(vecWordList);
-    //gameWord = {"PAPAR"};
-    while (1) {
+    //gameWord = getRandomWord(vecWordList);
+    gameWord = {"PAPAR"};
+    while (tentativa<=6) {
         cout << "Digite uma palavra: ";
         userWord = getUserInput();
         vecUserWord.push_back(userWord);
         showGameScreen(vecUserWord, gameWord, userWordChecked);
+        tentativa++;
+        if (isComplete( userWordChecked )){
+            break;
+        }
     }
+    pontuacao = (6-tentativa) * 25;
+    system("cls");
+    cout << "Pontuação : " << pontuacao << endl;
     return 0;
 }
 
@@ -94,6 +104,19 @@ bool containsLetter(char letter, string word) {
             return true;
     }
     return false;
+}
+
+bool isComplete(int userWordChecked[TAMANHO]){
+    bool check;
+    for (int i = 0;i<TAMANHO;i++){
+        if( userWordChecked[i] == 2 ){
+            check = true;
+        }else{
+            check = false;
+            break;
+        }
+    }
+    return check;
 }
 
 // Toda a string fica maiúscula
