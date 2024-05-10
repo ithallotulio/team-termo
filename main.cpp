@@ -8,10 +8,11 @@
 #include <windows.h>
 #include <cstdlib>
 
-#define GREEN "\033[7;32m"
-#define YELLOW "\033[7;33m"
-#define GREY "\033[7;90m"
-#define RESET "\033[0m"
+#define BGREEN  "\033[7;32m"
+#define GREEN   "\033[32m"
+#define BYELLOW "\033[7;33m"
+#define BGREY    "\033[7;90m"
+#define RESET   "\033[0m"
 #define TAMANHO 5
 
 using namespace std;
@@ -64,12 +65,13 @@ int main() {
     // Código
 
     instructionsGame();
+    cout << "Score: 0" << endl << endl;
     do {
         //gameWord = getRandomWord(vecWordList);
         gameWord = {"PAPAR"};
         startMenu(pontuacao);
         while (tentativa<=6) {
-            cout << "Digite uma palavra: ";
+            cout << "\nDigite uma palavra: ";
             userWord = getUserWord();
             vecUserWord.push_back(userWord);
             showGameScreen(vecUserWord, gameWord, userWordChecked, pontuacao);
@@ -79,10 +81,11 @@ int main() {
                 break;
             }
         }
-        sleep_for(2s);
+        cout << endl;
+        system("pause");
         system ("cls");
+        cout << "Score: " << pontuacao << " + " << GREEN << (7-tentativa) * 25 << RESET << endl << endl;
         pontuacao += (7-tentativa) * 25;
-        cout << "Pontuação da rodada : " << (7-tentativa) * 25 << endl;
 
         if (tentativa > 6 && !(isComplete(userWordChecked))){
             lose = true;
@@ -92,7 +95,7 @@ int main() {
         vecUserWord.clear();
         zeroArray(userWordChecked, TAMANHO);
 
-    }while (!lose);
+    } while (!lose);
         //tela de derrota e inserção de nome do jogador aqui
         cout << "perdeu" << endl;
     return 0;
@@ -244,11 +247,11 @@ void showUserWordChecked(string userInput, int userWordChecked[], int delay = 0)
         sleep_for(milliseconds(delay));
         cout << "|";
         if (userWordChecked[count]==2) {
-            cout << GREEN;
+            cout << BGREEN;
         } else if (userWordChecked[count]==1) {
-            cout << YELLOW;
+            cout << BYELLOW;
         } else if (userWordChecked[count]==0) {
-            cout << GREY;
+            cout << BGREY;
         }
         cout << " " << userInput[count] << " " << RESET;
     }
@@ -259,13 +262,13 @@ void showUserWordChecked(string userInput, int userWordChecked[], int delay = 0)
 void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChecked[], int pontuacao) {
     int i;
     system("cls");
-    cout << "Pontuação: " << pontuacao << endl << endl;
+    cout << "Score: " << pontuacao << endl << endl;
     for (i=0; i < vecUserWord.size()-1; i++){
         checkUserWord(vecUserWord[i], gameWord, userWordChecked);
         showUserWordChecked(vecUserWord[i], userWordChecked);
     }
     checkUserWord(vecUserWord[i], gameWord, userWordChecked);
-    showUserWordChecked(vecUserWord[i], userWordChecked, 300);
+    showUserWordChecked(vecUserWord[i], userWordChecked, 350);
     if (vecUserWord.size() < 6){
         for (i=0; i < 6-vecUserWord.size(); i++){
             cout << "---------------------" << endl;
@@ -273,6 +276,7 @@ void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChe
             cout << "---------------------" << endl;
         }
     }
+    sleep_for(milliseconds(300));
 }
 
 void instructionsGame() {
@@ -280,17 +284,17 @@ void instructionsGame() {
     cout << "                Descubra a palavra certa em 6 tentativas!!                " << endl << endl;
     cout << " Depois de cada tentativa, é mostrado o quão perto você está da solução " << endl << endl;
     cout << " ---------------------" << endl;
-    cout << " |" << GREEN << " T " << RESET << "| E | R | N | O |" << endl;
+    cout << " |" << BGREEN << " T " << RESET << "| E | R | N | O |" << endl;
     cout << " ---------------------" << endl << endl;
-    cout << " A letra " << GREEN << " T " << RESET << " faz parte da palavra e está na posição correta.\n" << endl;
+    cout << " A letra " << BGREEN << " T " << RESET << " faz parte da palavra e está na posição correta.\n" << endl;
     cout << " ---------------------" << endl;
-    cout << " | L |" << YELLOW << " A " << RESET << "| S | E | R |" << endl;
+    cout << " | L |" << BYELLOW << " A " << RESET << "| S | E | R |" << endl;
     cout << " ---------------------" << endl << endl;
-    cout << " A letra " << YELLOW << " A " << RESET << " faz parte da palavra, mas em outra posição." << endl << endl;
+    cout << " A letra " << BYELLOW << " A " << RESET << " faz parte da palavra, mas em outra posição." << endl << endl;
     cout << " ---------------------" << endl;
     cout << " | S | U | M | I | U |" << endl;
     cout << " ---------------------" << endl << endl;
-    cout << " Nenhuma letra faz parte da palavra." << endl;
+    cout << " Nenhuma letra faz parte da palavra." << endl << endl;
     cout << " Os acentos não são considerados, nem nas tentativas, nem nas respostas." << endl;
     cout << " As palavras podem possuir letras repetidas.\n" << endl;
     cout << " " << system ("pause");
@@ -298,8 +302,7 @@ void instructionsGame() {
 }
 
 void startMenu(int pontuacao){
-    int i=0;
-    cout << "Pontuação total : " << pontuacao << endl << endl;
+    int i=0;  
     for (i=0; i < 6; i++){
         cout << "---------------------" << endl;
         cout << "|   |   |   |   |   |" << endl;
