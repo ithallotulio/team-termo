@@ -25,7 +25,7 @@ void stringUpper(string *str);
 void zeroArray(int array[], int size);
 string removeSpaces(string word);
 
-// Game Mechanics and rules
+// Game Mechanics and Rules
 void checkUserWord(string userInput, string randomWord, int userWordChecked[]);
 bool isComplete(int userWordChecked[TAMANHO]);
 bool isValidWord(string word);
@@ -35,7 +35,7 @@ string getRandomWord(vector<string>vecString);
 // Game Interface
 void showUserWordChecked(string userInput, int userWordChecked[], int delay);
 void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChecked[]);
-
+void instructionsGame();
 // File
 vector<string> getFileInfo(string fileName);
 
@@ -55,6 +55,7 @@ int main() {
     // Código
     //gameWord = getRandomWord(vecWordList);
     gameWord = {"PAPAR"};
+    instructionsGame();
     while (tentativa<=6) {
         cout << "Digite uma palavra: ";
         userWord = getUserWord();
@@ -228,7 +229,45 @@ void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChe
         }
     }
 }
+void instructionsGame(){
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
+    system("cls");
+    cout << "                Descubra a palavra certa em 6 tentativas                " << endl;
+    cout << " Depois de cada tentativa, é mostrado o quão perto você está da solução " << endl;
+    cout << " ---------------------" << endl;
+    cout << "| ";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+    cout << "T";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+    cout << " | E | R | N | O |" << endl;
+    cout << " ---------------------" << endl;
+    cout << " A letra ";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+    cout << "T";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+    cout << " faz parte da palavra e está na posição correta " << endl << endl;
+    cout << " ---------------------" << endl;
+    cout << " | L | ";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
+    cout << "A";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+    cout << " | S | E | R |" << endl;
+    cout << " ---------------------" << endl;
+    cout << " A letra ";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
+    cout << "A";
+    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+    cout << " faz parte da palavra, mas em outra posição " << endl << endl;
+    cout << " ---------------------" << endl;
+    cout << " | S | U | M | I | U |" << endl;
+    cout << " ---------------------" << endl;
+    cout << " Nenhuma letra faz parte da palavra " << endl << endl;
+    cout << " Os acentos não são considerados, nem nas tentativas, nem nas respostas " << endl;
+    cout << " As palavras podem possuir letras repetidas" << endl << endl;
+    system ("pause");
+    system ("cls");
+}
 //                      ==========   File   ==========
 
 vector<string> getFileInfo(string fileName) {
@@ -240,4 +279,3 @@ vector<string> getFileInfo(string fileName) {
     }
     return fileInfo;
 }
-
