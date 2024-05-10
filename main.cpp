@@ -239,18 +239,18 @@ string getRandomWord(vector<string>vecString) {
 
 void showUserWordChecked(string userInput, int userWordChecked[], int delay = 0) {
     int count=0;
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     cout << "---------------------" << endl;
     for (count=0;count<TAMANHO;count++) {
         sleep_for(milliseconds(delay));
         cout << "|";
         if (userWordChecked[count]==2) {
-            SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+            cout << GREEN;
         } else if (userWordChecked[count]==1) {
-            SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
+            cout << YELLOW;
+        } else if (userWordChecked[count]==0) {
+            cout << GREY;
         }
-        cout << " " << userInput[count] << " " ;
-        SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+        cout << " " << userInput[count] << " " << RESET;
     }
     cout << "|" << endl;
     cout << "---------------------" << endl;
@@ -275,7 +275,7 @@ void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChe
     }
 }
 
-void instructionsGame(){
+void instructionsGame() {
     system("cls");
     cout << "                Descubra a palavra certa em 6 tentativas!!                " << endl << endl;
     cout << " Depois de cada tentativa, é mostrado o quão perto você está da solução " << endl << endl;
