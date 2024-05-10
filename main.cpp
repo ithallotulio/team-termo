@@ -8,6 +8,10 @@
 #include <windows.h>
 #include <cstdlib>
 
+#define GREEN "\033[7;32m"
+#define YELLOW "\033[7;33m"
+#define GREY "\033[7;90m"
+#define RESET "\033[0m"
 #define TAMANHO 5
 
 using namespace std;
@@ -38,7 +42,8 @@ string getRandomWord(vector<string>vecString);
 void showUserWordChecked(string userInput, int userWordChecked[], int delay);
 void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChecked[], int pontuacao);
 void instructionsGame();
-void startMenu( int );
+void startMenu(int);
+
 // File
 vector<string> getFileInfo(string fileName);
 
@@ -271,42 +276,24 @@ void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChe
 }
 
 void instructionsGame(){
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    int i;
     system("cls");
-    cout << "                Descubra a palavra certa em 6 tentativas                " << endl;
-    cout << " Depois de cada tentativa, é mostrado o quão perto você está da solução " << endl;
+    cout << "                Descubra a palavra certa em 6 tentativas!!                " << endl << endl;
+    cout << " Depois de cada tentativa, é mostrado o quão perto você está da solução " << endl << endl;
     cout << " ---------------------" << endl;
-    cout << "| ";
-    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-    cout << "T";
-    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-    cout << " | E | R | N | O |" << endl;
+    cout << " |" << GREEN << " T " << RESET << "| E | R | N | O |" << endl;
+    cout << " ---------------------" << endl << endl;
+    cout << " A letra " << GREEN << " T " << RESET << " faz parte da palavra e está na posição correta.\n" << endl;
     cout << " ---------------------" << endl;
-    cout << " A letra ";
-    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-    cout << "T";
-    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-    cout << " faz parte da palavra e está na posição correta " << endl << endl;
-    cout << " ---------------------" << endl;
-    cout << " | L | ";
-    SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
-    cout << "A";
-    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-    cout << " | S | E | R |" << endl;
-    cout << " ---------------------" << endl;
-    cout << " A letra ";
-    SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
-    cout << "A";
-    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-    cout << " faz parte da palavra, mas em outra posição " << endl << endl;
+    cout << " | L |" << YELLOW << " A " << RESET << "| S | E | R |" << endl;
+    cout << " ---------------------" << endl << endl;
+    cout << " A letra " << YELLOW << " A " << RESET << " faz parte da palavra, mas em outra posição." << endl << endl;
     cout << " ---------------------" << endl;
     cout << " | S | U | M | I | U |" << endl;
-    cout << " ---------------------" << endl;
-    cout << " Nenhuma letra faz parte da palavra " << endl << endl;
-    cout << " Os acentos não são considerados, nem nas tentativas, nem nas respostas " << endl;
-    cout << " As palavras podem possuir letras repetidas" << endl << endl;
-    system ("pause");
+    cout << " ---------------------" << endl << endl;
+    cout << " Nenhuma letra faz parte da palavra." << endl;
+    cout << " Os acentos não são considerados, nem nas tentativas, nem nas respostas." << endl;
+    cout << " As palavras podem possuir letras repetidas.\n" << endl;
+    cout << " " << system ("pause");
     system ("cls");
 }
 
