@@ -7,6 +7,7 @@
 #include <thread>
 #include <windows.h>
 #include <cstdlib>
+#include <locale.h>
 
 #define TAMANHO 5
 
@@ -44,6 +45,7 @@ vector<string> getFileInfo(string fileName);
 /* --------------------------------------------------------------------- */
 
 int main() {
+    setlocale(LC_ALL, "Portuguese");
     // Declaração de variáveis
     vector<string> vecWordList = getFileInfo("wordlist.txt");
     vector<string> vecUserWord;
