@@ -7,7 +7,6 @@
 #include <thread>
 #include <windows.h>
 #include <cstdlib>
-#include <locale.h>
 
 #define TAMANHO 5
 
@@ -37,6 +36,7 @@ string getRandomWord(vector<string>vecString);
 void showUserWordChecked(string userInput, int userWordChecked[], int delay);
 void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChecked[], int pontuacao);
 void instructionsGame();
+void startMenu( int );
 // File
 vector<string> getFileInfo(string fileName);
 
@@ -45,32 +45,49 @@ vector<string> getFileInfo(string fileName);
 /* --------------------------------------------------------------------- */
 
 int main() {
-    setlocale(LC_ALL, "Portuguese");
     // Declaração de variáveis
     vector<string> vecWordList = getFileInfo("wordlist.txt");
     vector<string> vecUserWord;
-    string userWord, gameWord;
+    string userWord = {0};
+    string gameWord = {0};
     int userWordChecked[TAMANHO] = {0};
     int pontuacao=0;
-    int tentativa=0;
-
+    int tentativa=1;
+    bool lose = false;
     // Código
-    //gameWord = getRandomWord(vecWordList);
-    gameWord = {"PAPAR"};
+
     instructionsGame();
-    while (tentativa<=6) {
-        cout << "Digite uma palavra: ";
-        userWord = getUserWord();
-        vecUserWord.push_back(userWord);
-        showGameScreen(vecUserWord, gameWord, userWordChecked, pontuacao);
-        tentativa++;
-        if (isComplete(userWordChecked)){
-            break;
+    do {
+        //gameWord = getRandomWord(vecWordList);
+        gameWord = {"PAPAR"};
+        startMenu(pontuacao);
+        while (tentativa<=6) {
+            cout << "Digite uma palavra: ";
+            userWord = getUserWord();
+            vecUserWord.push_back(userWord);
+            showGameScreen(vecUserWord, gameWord, userWordChecked, pontuacao);
+            tentativa++;
+            if (isComplete(userWordChecked)){
+                // tela de vitoria inserida aqui
+                break;
+            }
         }
-    }
-    pontuacao = (6-tentativa) * 25;
-    system("cls");
-    cout << "Pontuação : " << pontuacao << endl;
+        sleep_for(2s);
+        system ("cls");
+        pontuacao += (7-tentativa) * 25;
+        cout << "Pontuação da rodada : " << (7-tentativa) * 25 << endl;
+
+        if (tentativa > 6 && !(isComplete(userWordChecked))){
+            lose = true;
+        }
+        tentativa = 1;
+        userWord = "";
+        vecUserWord.clear();
+        zeroArray(userWordChecked, TAMANHO);
+
+    }while (!lose);
+        //tela de derrota e inserção de nome do jogador aqui
+        cout << "perdeu" << endl;
     return 0;
 }
 
@@ -217,7 +234,7 @@ void showUserWordChecked(string userInput, int userWordChecked[], int delay = 0)
 void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChecked[], int pontuacao) {
     int i;
     system("cls");
-    cout << "Pontuação: " << pontuacao << endl;
+    cout << "Pontuação: " << pontuacao << endl << endl;
     for (i=0; i < vecUserWord.size()-1; i++){
         checkUserWord(vecUserWord[i], gameWord, userWordChecked);
         showUserWordChecked(vecUserWord[i], userWordChecked);
@@ -234,7 +251,7 @@ void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChe
 }
 void instructionsGame(){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
+    int i;
     system("cls");
     cout << "                Descubra a palavra certa em 6 tentativas                " << endl;
     cout << " Depois de cada tentativa, é mostrado o quão perto você está da solução " << endl;
@@ -271,6 +288,17 @@ void instructionsGame(){
     system ("pause");
     system ("cls");
 }
+void startMenu(int pontuacao){
+    int i=0;
+    cout << "Pontuação total : " << pontuacao << endl << endl;
+    for (i=0; i < 6; i++){
+        cout << "---------------------" << endl;
+        cout << "|   |   |   |   |   |" << endl;
+        cout << "---------------------" << endl;
+    }
+
+}
+
 //                      ==========   File   ==========
 
 vector<string> getFileInfo(string fileName) {
