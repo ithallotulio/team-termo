@@ -20,6 +20,7 @@ using namespace std::chrono;
 
 // Utility
 bool isAlpha(string str);
+bool isAlphanumeric(const std::string& str);
 bool containsLetter(char letter, string word);
 void stringUpper(string *str);
 void zeroArray(int array[], int size);
@@ -30,6 +31,7 @@ void checkUserWord(string userInput, string randomWord, int userWordChecked[]);
 bool isComplete(int userWordChecked[TAMANHO]);
 bool isValidWord(string word);
 string getUserWord();
+string getUserName();
 string getRandomWord(vector<string>vecString);
 
 // Game Interface
@@ -101,6 +103,15 @@ bool isAlpha(string str) {
     for (char c : str) {
         if (!isalpha(c))
             return false;
+    }
+    return true;
+}
+
+bool isAlphanumeric(const std::string& str){
+    for (char c : str){
+        if(!std::isalnum(c)){
+            return false;
+        }
     }
     return true;
 }
@@ -204,12 +215,21 @@ string getUserWord() {
     return input;
 }
 
+string getUserName(){
+    string name;
+    getline(cin, name);
+    while (!isAlphanumeric(name) || name.length() > 15){
+        cout << "O nome digitado não é válido" << endl;
+        getline(cin, name);
+    }
+    return name;
+}
+
 string getRandomWord(vector<string>vecString) {
     srand(time(0));
     int RandomIndex = rand() % vecString.size();
     return vecString[RandomIndex];
 }
-
 //                  ==========   Game Interface   ==========
 
 void showUserWordChecked(string userInput, int userWordChecked[], int delay = 0) {
@@ -249,6 +269,7 @@ void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChe
         }
     }
 }
+
 void instructionsGame(){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     int i;
@@ -288,6 +309,7 @@ void instructionsGame(){
     system ("pause");
     system ("cls");
 }
+
 void startMenu(int pontuacao){
     int i=0;
     cout << "Pontuação total : " << pontuacao << endl << endl;
