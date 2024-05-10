@@ -34,7 +34,7 @@ string getRandomWord(vector<string>vecString);
 
 // Game Interface
 void showUserWordChecked(string userInput, int userWordChecked[], int delay);
-void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChecked[]);
+void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChecked[], int pontuacao);
 void instructionsGame();
 // File
 vector<string> getFileInfo(string fileName);
@@ -60,7 +60,7 @@ int main() {
         cout << "Digite uma palavra: ";
         userWord = getUserWord();
         vecUserWord.push_back(userWord);
-        showGameScreen(vecUserWord, gameWord, userWordChecked);
+        showGameScreen(vecUserWord, gameWord, userWordChecked, pontuacao);
         tentativa++;
         if (isComplete(userWordChecked)){
             break;
@@ -212,9 +212,10 @@ void showUserWordChecked(string userInput, int userWordChecked[], int delay = 0)
     cout << "---------------------" << endl;
 }
 
-void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChecked[]) {
+void showGameScreen(vector<string> vecUserWord, string gameWord, int userWordChecked[], int pontuacao) {
     int i;
     system("cls");
+    cout << "Pontuação: " << pontuacao << endl;
     for (i=0; i < vecUserWord.size()-1; i++){
         checkUserWord(vecUserWord[i], gameWord, userWordChecked);
         showUserWordChecked(vecUserWord[i], userWordChecked);
